@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "clean-architecture-example"
 include(":app")
- 

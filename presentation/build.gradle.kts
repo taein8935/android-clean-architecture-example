@@ -51,6 +51,9 @@ android {
 
 dependencies {
 
+    implementation(project(":domain")) // Domain Layer에 대한 의존성
+    implementation(project(":data"))   // Data Layer에 대한 의존성
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")

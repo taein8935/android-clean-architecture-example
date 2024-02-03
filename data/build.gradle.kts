@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.clean_architecture_example_data"
+    namespace = "com.clean_architecture_data"
     compileSdk = 33
 
     defaultConfig {

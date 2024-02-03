@@ -1,4 +1,4 @@
-package com.clean_architecture_example_data
+package com.clean_architecture_data
 
 import org.junit.Test
 

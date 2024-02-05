@@ -1,4 +1,4 @@
-package com.clean_architecture_example
+package com.clean_architecture_example.view.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.clean_architecture_example.ui.theme.CleanarchitectureexampleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,6 +6,7 @@ import com.clean_architecture_domain.util.ApiResult
 
 interface MovieDataSource {
     interface Remote {
+        suspend fun getMovies(page: Int, limit: Int): ApiResult<List<MovieEntity>>
         suspend fun getMovie(movieId: Int): ApiResult<MovieEntity>
     }
 }

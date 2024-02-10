@@ -2,12 +2,16 @@ package com.clean_architecture_example.view.movie.list
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,14 +25,20 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.SubcomposeAsyncImage
 import com.clean_architecture_domain.entity.MovieEntity
+import com.clean_architecture_example.R
 import com.clean_architecture_example.R.drawable
 import com.clean_architecture_example.util.preview.PreviewContainer
 
@@ -38,16 +48,16 @@ fun MovieListScreen(
     mainNavController: NavHostController,
     viewModel: MovieListViewModel
 ) {
-    val state = viewModel.movieData.collectAsState().value
-    MovieListScreen(state, mainNavController)
+    val movies = viewModel.movies.collectAsLazyPagingItems()
+    MovieListScreen(mainNavController, movies)
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieListScreen(
-    state: MovieEntity,
-    appNavController: NavHostController
+    mainNavController: NavHostController,
+    movies: LazyPagingItems<MovieEntity>
 ) {
     val favoriteIcon = drawable.ic_favorite_fill_white // drawable.ic_favorite_border_white
 
@@ -65,72 +75,67 @@ fun MovieListScreen(
             TopAppBar(
                 title = { Text(text = "Overview") },
                 navigationIcon = {
-                    IconButton(onClick = { appNavController.popBackStack() }) {
+                    IconButton(onClick = { mainNavController.popBackStack() }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                     }
                 }
             )
         }
     ) { paddingValues ->
-        Column(
-            Modifier
-                .fillMaxSize(1f)
-                .padding(paddingValues)
+        LazyColumn(
+            Modifier.padding(paddingValues),
+            userScrollEnabled = true,
         ) {
-            SubcomposeAsyncImage(
-                model = state.backgroundUrl,
-                loading = { MovieItemPlaceholder() },
-                error = { MovieItemPlaceholder() },
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .height(280.dp)
-                    .fillMaxWidth(1f)
-            )
-
-            Text(
-                text = state.title,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier
-                    .padding(16.dp, 16.dp, 16.dp, 0.dp)
-                    .fillMaxWidth(1f),
-            )
-
-            Text(
-                text = state.description,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
-                    .padding(16.dp, 8.dp)
-                    .fillMaxWidth(1f),
-            )
+            items(movies.itemCount) { index ->
+                val movie = movies[index]
+                MovieItem(movie!!, ImageSize.getImageFixedSize())
+            }
         }
     }
 }
 
 @Composable
-private fun MovieItemPlaceholder() {
-    Image(
-        painter = painterResource(id = drawable.bg_image),
-        contentDescription = "",
+private fun MovieItem(
+    movie: MovieEntity,
+    imageSize: ImageSize,
+    onMovieClick: (movieId: Int) -> Unit = {}
+) {
+    SubcomposeAsyncImage(
+        model = movie.image,
+        loading = { MovieItemPlaceholder() },
+        error = { MovieItemPlaceholder() },
+        contentDescription = null,
         contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .padding(3.dp)
+            .size(imageSize.width, imageSize.height)
+            .clickable { onMovieClick(movie.id) }
+            .clip(RoundedCornerShape(2))
     )
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun MovieDetailsScreenPreview() {
-    PreviewContainer {
-        MovieListScreen(
-            MovieEntity(
-                id = 1,
-                title = "Avatar",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-                category = "Action",
-                image = "https://i.stack.imgur.com/lDFzt.jpg",
-                backgroundUrl = "https://i.stack.imgur.com/lDFzt.jpg"
-            ),
-            rememberNavController()
-        )
+
+private class ImageSize(
+    val width: Dp,
+    val height: Dp
+) {
+    companion object {
+        @Composable
+        fun getImageFixedSize(): ImageSize {
+            val configuration = LocalConfiguration.current
+            val imageWidth = configuration.screenWidthDp.dp / 3
+            val imageHeight = imageWidth.times(1.3f)
+            return ImageSize(imageWidth, imageHeight)
+        }
     }
+}
+
+
+@Composable
+fun MovieItemPlaceholder() {
+    Image(
+        painter = painterResource(id = R.drawable.bg_image),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+    )
 }

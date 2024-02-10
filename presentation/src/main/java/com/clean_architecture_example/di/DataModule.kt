@@ -6,6 +6,7 @@ import com.clean_architecture_data.repository.movie.MovieRemoteDataSource
 import com.clean_architecture_data.repository.movie.MovieRepositoryImpl
 import com.clean_architecture_domain.repository.MovieRepository
 import com.clean_architecture_domain.usecase.movie.GetMovieDetail
+import com.clean_architecture_domain.usecase.movie.GetMovies
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,5 +37,10 @@ class DataModule {
     @Provides
     fun provideGetMovieDetailUseCase(movieRepository: MovieRepository): GetMovieDetail {
         return GetMovieDetail(movieRepository)
+    }
+
+    @Provides
+    fun provideGetMoviesUseCase(movieRepository: MovieRepository): GetMovies {
+        return GetMovies(movieRepository)
     }
 }

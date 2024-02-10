@@ -8,14 +8,26 @@ import androidx.navigation.compose.composable
 import com.clean_architecture_example.navigation.Page
 import com.clean_architecture_example.view.movie.detail.MovieDetailScreen
 import com.clean_architecture_example.view.movie.detail.MovieDetailViewModel
+import com.clean_architecture_example.view.movie.list.MovieListScreen
+import com.clean_architecture_example.view.movie.list.MovieListViewModel
 
 @Composable
 fun MainGraph(
     mainNavController: NavHostController
 ) {
-    NavHost(navController = mainNavController, startDestination = Page.MoveDetail.route) {
+    NavHost(navController = mainNavController, startDestination = Page.Movies.route) {
         composable(
-            route = Page.MoveDetail.route
+            route = Page.Movies.route
+        ) {
+            val viewModel = hiltViewModel<MovieListViewModel>()
+            MovieListScreen(
+                mainNavController = mainNavController,
+                viewModel = viewModel
+            )
+        }
+
+        composable(
+            route = Page.MovieDetail.route
         ) {
             val viewModel = hiltViewModel<MovieDetailViewModel>()
             MovieDetailScreen(

@@ -11,6 +11,9 @@ import com.clean_architecture_domain.util.ApiResult
 import com.clean_architecture_domain.util.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.logging.Logger
 import javax.inject.Inject
@@ -20,12 +23,13 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieDetail: GetMovieDetail,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val movieId = mutableStateOf(savedStateHandle.get<Int>("movieId") ?: 466420)
-    val movie = mutableStateOf<MovieEntity?>(null)
+    private val movieId = mutableStateOf(savedStateHandle.get<Int>("movieId") ?: 466420)
+    val movieData = MutableStateFlow<MovieEntity>(MovieEntity())
+
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main.immediate) {
             getMovieById(movieId.value).onSuccess {
-                movie.value = it
+                movieData.value = it
             }
         }
 

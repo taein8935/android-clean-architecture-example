@@ -73,7 +73,7 @@ fun MovieListScreen(
         },
         topBar = {
             TopAppBar(
-                title = { Text(text = "Overview") },
+                title = { Text(text = "영화 목록") },
                 navigationIcon = {
                     IconButton(onClick = { mainNavController.popBackStack() }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
@@ -123,8 +123,8 @@ private class ImageSize(
         @Composable
         fun getImageFixedSize(): ImageSize {
             val configuration = LocalConfiguration.current
-            val imageWidth = configuration.screenWidthDp.dp / 3
-            val imageHeight = imageWidth.times(1.3f)
+            val imageWidth = configuration.screenWidthDp.dp / 1
+            val imageHeight = imageWidth.times(1f)
             return ImageSize(imageWidth, imageHeight)
         }
     }

@@ -22,7 +22,6 @@ class MoviesPagingSource(
             LoadResult.Error(it.error)
         })
     }
-
     override fun getRefreshKey(state: PagingState<Int, MovieEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey

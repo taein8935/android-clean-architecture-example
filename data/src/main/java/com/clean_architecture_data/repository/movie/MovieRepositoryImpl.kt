@@ -14,7 +14,7 @@ class MovieRepositoryImpl(private val remote: MovieDataSource.Remote) : MovieRep
         return Pager(
             config = PagingConfig(
                 pageSize = pageSize,
-                enablePlaceholders = false
+                enablePlaceholders = false,
             ),
             pagingSourceFactory = { MoviesPagingSource(remote) }
         ).flow

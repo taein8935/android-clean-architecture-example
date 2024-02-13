@@ -35,7 +35,7 @@ import com.clean_architecture_example.util.preview.PreviewContainer
 
 
 @Composable
-fun MovieDetailScreen(
+fun MovieDetailPage(
     mainNavController: NavHostController,
     viewModel: MovieDetailViewModel
 ) {

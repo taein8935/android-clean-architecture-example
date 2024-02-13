@@ -36,9 +36,7 @@ class MovieDetailViewModel @Inject constructor(
             getMovieById(movieId.value).onSuccess {
                 movieData.value = it
             }
-
         }
-
     }
 
     private suspend fun getMovieById(movieId: Int): ApiResult<MovieEntity> {

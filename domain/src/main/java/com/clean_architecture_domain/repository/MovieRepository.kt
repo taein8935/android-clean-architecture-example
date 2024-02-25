@@ -8,5 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     fun movies(pageSize: Int): Flow<PagingData<MovieEntity>>
+
+    fun moviesUsingRemoteMediator(pageSize: Int): Flow<PagingData<MovieEntity>>
     suspend fun getMovieDetail(movieId: Int): ApiResult<MovieEntity>
 }

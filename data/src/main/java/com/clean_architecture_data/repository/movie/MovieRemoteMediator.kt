@@ -11,7 +11,7 @@ import com.clean_architecture_domain.util.getResult
 private const val MOVIE_START_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
-class MovieRemoteMediator2(
+class MovieRemoteMediator(
     private val local: MovieDataSource.Local, // 로컬 데이터 소스 참조
     private val remote: MovieDataSource.Remote // 원격 데이터 소스 참조
 ) : RemoteMediator<Int, MovieDbData>() { // RemoteMediator를 상속받아 구현

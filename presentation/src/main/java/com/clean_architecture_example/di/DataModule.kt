@@ -6,6 +6,7 @@ import com.clean_architecture_data.db.movie.MovieRemoteKeyDao
 import com.clean_architecture_data.repository.movie.MovieDataSource
 import com.clean_architecture_data.repository.movie.MovieLocalDataSource
 import com.clean_architecture_data.repository.movie.MovieRemoteDataSource
+import com.clean_architecture_data.repository.movie.MovieRemoteMediator
 import com.clean_architecture_data.repository.movie.MovieRepositoryImpl
 import com.clean_architecture_data.util.DiskExecutor
 import com.clean_architecture_domain.repository.MovieRepository
@@ -31,13 +32,23 @@ class DataModule {
     fun provideMovieRepository(
         movieRemote: MovieDataSource.Remote,
         movieLocal: MovieDataSource.Local,
+        movieRemoteMediator: MovieRemoteMediator
     ): MovieRepository {
         return MovieRepositoryImpl(
             remote = movieRemote,
-            local = movieLocal
+            local = movieLocal,
+            remoteMediator = movieRemoteMediator
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideMovieMediator(
+        movieLocalDataSource: MovieDataSource.Local,
+        movieRemoteDataSource: MovieDataSource.Remote
+    ): MovieRemoteMediator {
+        return MovieRemoteMediator(movieLocalDataSource, movieRemoteDataSource)
+    }
 
     @Provides
     @Singleton

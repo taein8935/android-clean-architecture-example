@@ -9,7 +9,10 @@ import com.clean_architecture_domain.repository.MovieRepository
 import com.clean_architecture_domain.util.ApiResult
 import kotlinx.coroutines.flow.Flow
 
-class MovieRepositoryImpl(private val remote: MovieDataSource.Remote) : MovieRepository {
+class MovieRepositoryImpl(
+    private val remote: MovieDataSource.Remote,
+    private val local: MovieDataSource.Local,
+) : MovieRepository {
     override fun movies(pageSize: Int): Flow<PagingData<MovieEntity>> {
         return Pager(
             config = PagingConfig(

@@ -6,6 +6,16 @@ import com.clean_architecture_domain.entity.MovieEntity
 import com.clean_architecture_domain.util.ApiResult
 
 class MovieRemoteDataSource(private val movieApi: MovieApi) : MovieDataSource.Remote {
+    override suspend fun getMovies(page: Int, limit: Int): ApiResult<List<MovieEntity>> = try {
+        val result = movieApi.getMovies(
+            page = page,
+            limit = limit
+        )
+        ApiResult.Success(result.map { it.toDomain() })
+    } catch (e: Exception) {
+        ApiResult.Error(e)
+    }
+
     override suspend fun getMovie(movieId: Int): ApiResult<MovieEntity> = try {
         // 외부 API를 통해 영화 정보를 조회
         val result = movieApi.getMovie(movieId)

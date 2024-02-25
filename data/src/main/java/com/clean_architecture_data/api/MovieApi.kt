@@ -6,8 +6,11 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
-    @GET("/movies")
-    suspend fun getMovies(@Query("id") movieIds: List<Int>): List<MovieData>
+    @GET("/movies?&_sort=category,id")
+    suspend fun getMovies(
+        @Query("_page") page: Int,
+        @Query("_limit") limit: Int,
+    ): List<MovieData>
     @GET("/movies/{id}")
     suspend fun getMovie(@Path("id") movieId: Int): MovieData
 }

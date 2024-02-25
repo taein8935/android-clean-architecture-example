@@ -61,7 +61,7 @@ dependencies {
     // GSON
     implementation("com.google.code.gson:gson:2.9.1")
 
-    // hilt
+    // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.multidex:multidex:2.0.1")
@@ -79,6 +79,13 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.3.0")
+
+    //Paging
+    implementation("androidx.paging:paging-compose:3.2.1")
+
+    //Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

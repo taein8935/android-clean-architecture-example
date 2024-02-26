@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.clean_architecture_example.util.preview.PreviewContainer
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialog
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
+import com.clean_architecture_example.view.dialog.loading_dialog.LoadingState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,6 +76,22 @@ fun MainScreen(
             ) {
                 Text(
                     text = "2. Show BottomSheetDialog",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(
+                onClick = { LoadingState.show() },
+                shape = RectangleShape,
+            ) {
+                Text(
+                    text = "3. Show LoadingDialog",
                     textAlign = TextAlign.Center,
                     style = TextStyle(
                         fontSize = 14.sp,

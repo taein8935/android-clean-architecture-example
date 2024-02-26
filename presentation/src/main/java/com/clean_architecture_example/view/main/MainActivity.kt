@@ -23,6 +23,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.clean_architecture_example.ui.theme.CleanarchitectureexampleTheme
+import com.clean_architecture_example.view.dialog.loading_dialog.GlobalLoadingScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,36 +42,6 @@ class MainActivity : ComponentActivity() {
                     GlobalLoadingScreen()
                 }
 
-            }
-        }
-    }
-
-    object LoadingState {
-        private val _isLoading = MutableStateFlow(true)
-        val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
-        fun show() {
-            _isLoading.value = true
-        }
-
-        fun hide() {
-            _isLoading.value = false
-        }
-    }
-
-    @Composable
-    fun GlobalLoadingScreen() {
-        val isLoading = LoadingState.isLoading.collectAsState().value
-
-        if (isLoading) {
-            Dialog(
-                onDismissRequest = { LoadingState.hide() },
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true,
-                )
-            ) {
-                CircularProgressIndicator()
             }
         }
     }

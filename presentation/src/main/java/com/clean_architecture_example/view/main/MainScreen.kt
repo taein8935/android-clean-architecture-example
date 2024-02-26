@@ -1,23 +1,13 @@
 package com.clean_architecture_example.view.main
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -25,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -33,11 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.clean_architecture_example.util.preview.PreviewContainer
-import com.clean_architecture_example.view.dialog.CustomAlertDialog
+import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialog
+import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +36,7 @@ fun MainScreen(
 ) {
 
     val customAlertDialogState = viewModel.customAlertDialogState.value
+    val customBottomSheetDialogState = viewModel.customBottomSheetDialogState.value
 
     Scaffold(
         topBar = {
@@ -80,7 +70,7 @@ fun MainScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(
-                onClick = { viewModel.showCustomAlertDialog() },
+                onClick = { viewModel.showBottomSheetDialog() },
                 shape = RectangleShape,
             ) {
                 Text(
@@ -99,6 +89,15 @@ fun MainScreen(
                     description = customAlertDialogState.description,
                     onClickCancel = { customAlertDialogState.onClickCancel() },
                     onClickConfirm = { customAlertDialogState.onClickConfirm() }
+                )
+            }
+
+            if (customBottomSheetDialogState.title.isNotBlank()) {
+                CustomBottomSheetDialog(
+                    title = customBottomSheetDialogState.title,
+                    description = customBottomSheetDialogState.description,
+                    onClickCancel = { customBottomSheetDialogState.onClickCancel() },
+                    onClickConfirm = { customBottomSheetDialogState.onClickConfirm() }
                 )
             }
         }

@@ -1,12 +1,15 @@
 package com.clean_architecture_example.view.main
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialogState
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialogState
+import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +22,26 @@ class MainViewModel @Inject constructor(
     val customBottomSheetDialogState: MutableState<CustomBottomSheetDialogState> = mutableStateOf(
         CustomBottomSheetDialogState()
     )
+    val customDatePickerDialogState: MutableState<CustomDatePickerDialogState?> =
+        mutableStateOf(null)
+
+
+    init {
+        customDatePickerDialogState.value = CustomDatePickerDialogState(
+            onClickConfirm = { yyyyMMdd ->
+                Log.e("test", "onclickConfirm")
+                customDatePickerDialogState.value = customDatePickerDialogState.value?.copy(
+                    isShowDialog = false,
+                    selectedDate = yyyyMMdd
+                )
+            },
+            onClickCancel = {
+                customDatePickerDialogState.value = customDatePickerDialogState.value?.copy(
+                    isShowDialog = false
+                )
+            }
+        )
+    }
 
     fun showCustomAlertDialog() {
         customAlertDialogState.value = CustomAlertDialogState(
@@ -44,6 +67,12 @@ class MainViewModel @Inject constructor(
                 resetBottomSheetDialogState()
             }
         )
+    }
+
+    fun showDatePickerDialog() {
+        Log.e("customDatePickerDialogState.value", customDatePickerDialogState.value.toString())
+        customDatePickerDialogState.value =
+            customDatePickerDialogState.value?.copy(isShowDialog = true)
     }
 
 

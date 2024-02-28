@@ -27,7 +27,8 @@ import androidx.navigation.compose.rememberNavController
 import com.clean_architecture_example.util.preview.PreviewContainer
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialog
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
-import com.clean_architecture_example.view.dialog.loading_dialog.LoadingState
+import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialog
+import com.clean_architecture_example.view.dialog.custom_loading_dialog.LoadingState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,6 +39,7 @@ fun MainScreen(
 
     val customAlertDialogState = viewModel.customAlertDialogState.value
     val customBottomSheetDialogState = viewModel.customBottomSheetDialogState.value
+    val customDatePickerDialogState = viewModel.customDatePickerDialogState.value
 
     Scaffold(
         topBar = {
@@ -100,12 +102,35 @@ fun MainScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(
+                onClick = { viewModel.showDatePickerDialog() },
+                shape = RectangleShape,
+            ) {
+                Text(
+                    text = "4. Show DatePickerDialog",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Text(
+                text = "Selected Date: ${viewModel.customDatePickerDialogState.value?.selectedDate ?: "날짜를 선택해주세요."}",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
             if (customAlertDialogState.title.isNotBlank()) {
                 CustomAlertDialog(
                     title = customAlertDialogState.title,
                     description = customAlertDialogState.description,
-                    onClickCancel = { customAlertDialogState.onClickCancel() },
-                    onClickConfirm = { customAlertDialogState.onClickConfirm() }
+                    onClickCancel = customAlertDialogState.onClickCancel,
+                    onClickConfirm = customAlertDialogState.onClickConfirm
                 )
             }
 
@@ -113,8 +138,16 @@ fun MainScreen(
                 CustomBottomSheetDialog(
                     title = customBottomSheetDialogState.title,
                     description = customBottomSheetDialogState.description,
-                    onClickCancel = { customBottomSheetDialogState.onClickCancel() },
-                    onClickConfirm = { customBottomSheetDialogState.onClickConfirm() }
+                    onClickCancel = customBottomSheetDialogState.onClickCancel,
+                    onClickConfirm = customBottomSheetDialogState.onClickConfirm
+                )
+            }
+
+            if (customDatePickerDialogState?.isShowDialog == true) {
+                CustomDatePickerDialog(
+                    selectedDate = customDatePickerDialogState.selectedDate,
+                    onClickCancel = customDatePickerDialogState.onClickCancel,
+                    onClickConfirm = customDatePickerDialogState.onClickConfirm
                 )
             }
         }

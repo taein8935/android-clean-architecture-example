@@ -1,4 +1,4 @@
-package com.clean_architecture_example.view.dialog.loading_dialog
+package com.clean_architecture_example.view.dialog.custom_loading_dialog
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

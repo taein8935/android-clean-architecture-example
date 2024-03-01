@@ -29,6 +29,7 @@ import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAler
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialog
 import com.clean_architecture_example.view.dialog.custom_loading_dialog.LoadingState
+import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +41,7 @@ fun MainScreen(
     val customAlertDialogState = viewModel.customAlertDialogState.value
     val customBottomSheetDialogState = viewModel.customBottomSheetDialogState.value
     val customDatePickerDialogState = viewModel.customDatePickerDialogState.value
+    val customTimePickerDialogState = viewModel.customTimePickerDialogState.value
 
     Scaffold(
         topBar = {
@@ -125,6 +127,30 @@ fun MainScreen(
                 )
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(
+                onClick = { viewModel.showTimePickerDialog() },
+                shape = RectangleShape,
+            ) {
+                Text(
+                    text = "5. Show TimePickerDialog",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Text(
+                text = "Selected Time: ${viewModel.customTimePickerDialogState.value?.selectedHHmm ?: "시간을 선택해주세요."}",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
+
             if (customAlertDialogState.title.isNotBlank()) {
                 CustomAlertDialog(
                     title = customAlertDialogState.title,
@@ -148,6 +174,15 @@ fun MainScreen(
                     selectedDate = customDatePickerDialogState.selectedDate,
                     onClickCancel = customDatePickerDialogState.onClickCancel,
                     onClickConfirm = customDatePickerDialogState.onClickConfirm
+                )
+            }
+
+            if (customTimePickerDialogState?.isShowDialog == true) {
+                CustomTimePickerDialog(
+                    selectedHour = customTimePickerDialogState.selectedHour,
+                    selectedMinute = customTimePickerDialogState.selectedMinute,
+                    onClickCancel = customTimePickerDialogState.onClickCancel,
+                    onClickConfirm = customTimePickerDialogState.onClickConfirm
                 )
             }
         }

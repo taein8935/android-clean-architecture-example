@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialogState
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialogState
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialogState
+import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -25,6 +26,8 @@ class MainViewModel @Inject constructor(
     val customDatePickerDialogState: MutableState<CustomDatePickerDialogState?> =
         mutableStateOf(null)
 
+    val customTimePickerDialogState: MutableState<CustomTimePickerDialogState?> =
+        mutableStateOf(null)
 
     init {
         customDatePickerDialogState.value = CustomDatePickerDialogState(
@@ -37,6 +40,21 @@ class MainViewModel @Inject constructor(
             },
             onClickCancel = {
                 customDatePickerDialogState.value = customDatePickerDialogState.value?.copy(
+                    isShowDialog = false
+                )
+            }
+        )
+
+        customTimePickerDialogState.value = CustomTimePickerDialogState(
+            onClickConfirm = { hour, minute ->
+                customTimePickerDialogState.value = customTimePickerDialogState.value?.copy(
+                    isShowDialog = false,
+                    selectedHour = hour,
+                    selectedMinute = minute
+                )
+            },
+            onClickCancel = {
+                customTimePickerDialogState.value = customTimePickerDialogState.value?.copy(
                     isShowDialog = false
                 )
             }
@@ -70,9 +88,13 @@ class MainViewModel @Inject constructor(
     }
 
     fun showDatePickerDialog() {
-        Log.e("customDatePickerDialogState.value", customDatePickerDialogState.value.toString())
         customDatePickerDialogState.value =
             customDatePickerDialogState.value?.copy(isShowDialog = true)
+    }
+
+    fun showTimePickerDialog() {
+        customTimePickerDialogState.value =
+            customTimePickerDialogState.value?.copy(isShowDialog = true)
     }
 
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialogState
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialogState
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialogState
+import com.clean_architecture_example.view.dialog.custom_text_field_dialog.CustomTextFieldDialogState
 import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,9 @@ class MainViewModel @Inject constructor(
         mutableStateOf(null)
 
     val customTimePickerDialogState: MutableState<CustomTimePickerDialogState?> =
+        mutableStateOf(null)
+
+    val customTextFieldDialogState: MutableState<CustomTextFieldDialogState?> =
         mutableStateOf(null)
 
     init {
@@ -55,6 +59,20 @@ class MainViewModel @Inject constructor(
             },
             onClickCancel = {
                 customTimePickerDialogState.value = customTimePickerDialogState.value?.copy(
+                    isShowDialog = false
+                )
+            }
+        )
+
+        customTextFieldDialogState.value = CustomTextFieldDialogState(
+            onClickConfirm = { text ->
+                customTextFieldDialogState.value = customTextFieldDialogState.value?.copy(
+                    isShowDialog = false,
+                    text = text
+                )
+            },
+            onClickCancel = {
+                customTextFieldDialogState.value = customTextFieldDialogState.value?.copy(
                     isShowDialog = false
                 )
             }
@@ -97,6 +115,10 @@ class MainViewModel @Inject constructor(
             customTimePickerDialogState.value?.copy(isShowDialog = true)
     }
 
+    fun showTextFieldDialog() {
+        customTextFieldDialogState.value =
+            customTextFieldDialogState.value?.copy(isShowDialog = true)
+    }
 
     // 다이얼로그 상태 초기화
     fun resetDialogState() {

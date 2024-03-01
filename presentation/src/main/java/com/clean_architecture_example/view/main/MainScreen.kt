@@ -29,6 +29,7 @@ import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAler
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialog
 import com.clean_architecture_example.view.dialog.custom_loading_dialog.LoadingState
+import com.clean_architecture_example.view.dialog.custom_text_field_dialog.CustomTextFieldDialog
 import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,6 +43,7 @@ fun MainScreen(
     val customBottomSheetDialogState = viewModel.customBottomSheetDialogState.value
     val customDatePickerDialogState = viewModel.customDatePickerDialogState.value
     val customTimePickerDialogState = viewModel.customTimePickerDialogState.value
+    val customTextFieldDialogState = viewModel.customTextFieldDialogState.value
 
     Scaffold(
         topBar = {
@@ -150,6 +152,30 @@ fun MainScreen(
                 )
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(
+                onClick = { viewModel.showTextFieldDialog() },
+                shape = RectangleShape,
+            ) {
+                Text(
+                    text = "6. Show TextFieldDialog",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Text(
+                text = "text: ${viewModel.customTextFieldDialogState.value?.text ?: "텍스트를 입력해주세요."}",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
+
 
             if (customAlertDialogState.title.isNotBlank()) {
                 CustomAlertDialog(
@@ -183,6 +209,14 @@ fun MainScreen(
                     selectedMinute = customTimePickerDialogState.selectedMinute,
                     onClickCancel = customTimePickerDialogState.onClickCancel,
                     onClickConfirm = customTimePickerDialogState.onClickConfirm
+                )
+            }
+
+            if (customTextFieldDialogState?.isShowDialog == true) {
+                CustomTextFieldDialog(
+                    initialText = customTextFieldDialogState.text,
+                    onClickCancel = customTextFieldDialogState.onClickCancel,
+                    onClickConfirm = customTextFieldDialogState.onClickConfirm
                 )
             }
         }

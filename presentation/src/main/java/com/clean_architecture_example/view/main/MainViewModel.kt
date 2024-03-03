@@ -7,6 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialogState
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialogState
+import com.clean_architecture_example.view.dialog.custom_checkbox_dialog.CheckboxState
+import com.clean_architecture_example.view.dialog.custom_checkbox_dialog.CustomCheckboxDialogState
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialogState
 import com.clean_architecture_example.view.dialog.custom_text_field_dialog.CustomTextFieldDialogState
 import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialogState
@@ -31,6 +33,9 @@ class MainViewModel @Inject constructor(
         mutableStateOf(null)
 
     val customTextFieldDialogState: MutableState<CustomTextFieldDialogState?> =
+        mutableStateOf(null)
+
+    val customCheckboxDialogState: MutableState<CustomCheckboxDialogState?> =
         mutableStateOf(null)
 
     init {
@@ -77,6 +82,27 @@ class MainViewModel @Inject constructor(
                 )
             }
         )
+
+        customCheckboxDialogState.value = CustomCheckboxDialogState(
+            checkboxList = arrayListOf(
+                CheckboxState("1", mutableStateOf(false)),
+                CheckboxState("2", mutableStateOf(false)),
+                CheckboxState("3", mutableStateOf(false)),
+                CheckboxState("4", mutableStateOf(false)),
+                CheckboxState("5", mutableStateOf(false)),
+            ),
+            onClickConfirm = { checkboxList ->
+                customCheckboxDialogState.value = customCheckboxDialogState.value?.copy(
+                    isShowDialog = false,
+                    checkboxList = checkboxList
+                )
+            },
+            onClickCancel = {
+                customCheckboxDialogState.value = customCheckboxDialogState.value?.copy(
+                    isShowDialog = false
+                )
+            }
+        )
     }
 
     fun showCustomAlertDialog() {
@@ -105,6 +131,8 @@ class MainViewModel @Inject constructor(
         )
     }
 
+
+
     fun showDatePickerDialog() {
         customDatePickerDialogState.value =
             customDatePickerDialogState.value?.copy(isShowDialog = true)
@@ -118,6 +146,11 @@ class MainViewModel @Inject constructor(
     fun showTextFieldDialog() {
         customTextFieldDialogState.value =
             customTextFieldDialogState.value?.copy(isShowDialog = true)
+    }
+
+    fun showCheckboxDialog() {
+        customCheckboxDialogState.value =
+            customCheckboxDialogState.value?.copy(isShowDialog = true)
     }
 
     // 다이얼로그 상태 초기화

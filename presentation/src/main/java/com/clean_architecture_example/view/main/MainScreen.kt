@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +15,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
@@ -27,6 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import com.clean_architecture_example.util.preview.PreviewContainer
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialog
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
+import com.clean_architecture_example.view.dialog.custom_checkbox_dialog.CustomCheckboxDialog
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialog
 import com.clean_architecture_example.view.dialog.custom_loading_dialog.LoadingState
 import com.clean_architecture_example.view.dialog.custom_text_field_dialog.CustomTextFieldDialog
@@ -39,11 +43,13 @@ fun MainScreen(
     viewModel: MainViewModel
 ) {
 
+
     val customAlertDialogState = viewModel.customAlertDialogState.value
     val customBottomSheetDialogState = viewModel.customBottomSheetDialogState.value
     val customDatePickerDialogState = viewModel.customDatePickerDialogState.value
     val customTimePickerDialogState = viewModel.customTimePickerDialogState.value
     val customTextFieldDialogState = viewModel.customTextFieldDialogState.value
+    val customCheckboxDialogState = viewModel.customCheckboxDialogState.value
 
     Scaffold(
         topBar = {
@@ -175,6 +181,29 @@ fun MainScreen(
                 )
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(
+                onClick = { viewModel.showCheckboxDialog() },
+                shape = RectangleShape,
+            ) {
+                Text(
+                    text = "7. Show CheckboxDialog",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Text(
+                text = "text: ${viewModel.customCheckboxDialogState.value?.checkboxList?.map { it.isChecked.value }?.toString() ?: "체크를 해보세요."}",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
 
 
             if (customAlertDialogState.title.isNotBlank()) {
@@ -217,6 +246,14 @@ fun MainScreen(
                     initialText = customTextFieldDialogState.text,
                     onClickCancel = customTextFieldDialogState.onClickCancel,
                     onClickConfirm = customTextFieldDialogState.onClickConfirm
+                )
+            }
+
+            if (customCheckboxDialogState?.isShowDialog == true) {
+                CustomCheckboxDialog(
+                    initialCheckboxList = customCheckboxDialogState.checkboxList,
+                    onClickCancel = customCheckboxDialogState.onClickCancel,
+                    onClickConfirm = customCheckboxDialogState.onClickConfirm
                 )
             }
         }

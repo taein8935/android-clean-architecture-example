@@ -1,4 +1,4 @@
-package com.clean_architecture_example.view.dialog.custom_checkbox_dialog
+package com.clean_architecture_example.view.dialog.custom_radio_button_dialog
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -12,37 +12,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.clean_architecture_example.util.preview.PreviewContainer
-import com.clean_architecture_example.view.dialog.custom_radio_button_dialog.RadioButtonState
 
 @Composable
-fun CustomCheckboxDialog(
-    initialCheckboxList: ArrayList<CheckboxState>?,
+fun CustomRadioButtonDialog(
+    initialRadioButtonList: ArrayList<RadioButtonState>?,
     onClickCancel: () -> Unit,
-    onClickConfirm: (ArrayList<CheckboxState>) -> Unit
+    onClickConfirm: (ArrayList<RadioButtonState>) -> Unit
 ) {
-    val checkboxList = initialCheckboxList?.map {
+    val radioButtonList = initialRadioButtonList?.map {
         it.copy(
             text = it.text,
             isChecked = mutableStateOf(it.isChecked.value)
@@ -66,30 +60,36 @@ fun CustomCheckboxDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                Text(text = "추가 옵션을 선택해주세요.")
+                Text(text = "후기를 입력해주세요.")
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                // checkbox list
-                for (checkboxState in checkboxList) {
+                // radioButton list
+                for (radioButtonState in radioButtonList) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {
-                                checkboxState.isChecked.value = !checkboxState.isChecked.value
-                            },
+                            .selectable(
+                                selected = radioButtonState.isChecked.value,
+                                onClick = {
+                                    radioButtonList.forEach {
+                                        it.isChecked.value = false
+                                    }
+                                    radioButtonState.isChecked.value = true
+                                }
+                            ),
                         verticalAlignment = Alignment.CenterVertically,
 
                         ) {
-                        Checkbox(
-                            checked = checkboxState.isChecked.value,
-                            onCheckedChange = null
+                        RadioButton(
+                            selected = radioButtonState.isChecked.value,
+                            onClick = null
                         )
 
                         Spacer(modifier = Modifier.width(5.dp))
 
                         Text(
-                            text = checkboxState.text,
+                            text = radioButtonState.text,
                             modifier = Modifier
                                 .fillMaxWidth(0.8f)
                         )
@@ -114,7 +114,7 @@ fun CustomCheckboxDialog(
                     Spacer(modifier = Modifier.width(5.dp))
 
                     Button(onClick = {
-                        onClickConfirm(checkboxList)
+                        onClickConfirm(radioButtonList)
                     }) {
                         Text(text = "확인")
                     }
@@ -127,12 +127,12 @@ fun CustomCheckboxDialog(
 
 @Composable
 @Preview
-fun CustomCheckboxDialogPreview() {
-    CustomCheckboxDialog(
-        initialCheckboxList = arrayListOf(
-            CheckboxState(text = "1번"),
-            CheckboxState(text = "2번"),
-            CheckboxState(text = "3번"),
+fun CustomRadioButtonDialogPreview() {
+    CustomRadioButtonDialog(
+        initialRadioButtonList = arrayListOf(
+            RadioButtonState(text = "1번"),
+            RadioButtonState(text = "2번"),
+            RadioButtonState(text = "3번"),
         ),
         onClickCancel = {},
         onClickConfirm = {},

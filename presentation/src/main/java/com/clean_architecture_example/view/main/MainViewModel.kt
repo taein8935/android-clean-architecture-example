@@ -10,6 +10,8 @@ import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.Cus
 import com.clean_architecture_example.view.dialog.custom_checkbox_dialog.CheckboxState
 import com.clean_architecture_example.view.dialog.custom_checkbox_dialog.CustomCheckboxDialogState
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialogState
+import com.clean_architecture_example.view.dialog.custom_radio_button_dialog.CustomRadioButtonDialogState
+import com.clean_architecture_example.view.dialog.custom_radio_button_dialog.RadioButtonState
 import com.clean_architecture_example.view.dialog.custom_text_field_dialog.CustomTextFieldDialogState
 import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +38,9 @@ class MainViewModel @Inject constructor(
         mutableStateOf(null)
 
     val customCheckboxDialogState: MutableState<CustomCheckboxDialogState?> =
+        mutableStateOf(null)
+
+    val customRadioButtonDialogState: MutableState<CustomRadioButtonDialogState?> =
         mutableStateOf(null)
 
     init {
@@ -85,11 +90,11 @@ class MainViewModel @Inject constructor(
 
         customCheckboxDialogState.value = CustomCheckboxDialogState(
             checkboxList = arrayListOf(
-                CheckboxState("1", mutableStateOf(false)),
-                CheckboxState("2", mutableStateOf(false)),
-                CheckboxState("3", mutableStateOf(false)),
-                CheckboxState("4", mutableStateOf(false)),
-                CheckboxState("5", mutableStateOf(false)),
+                CheckboxState("치킨무", mutableStateOf(false)),
+                CheckboxState("어니언 양파링", mutableStateOf(false)),
+                CheckboxState("치즈스틱", mutableStateOf(false)),
+                CheckboxState("떡볶이", mutableStateOf(false)),
+                CheckboxState("소떡소떡", mutableStateOf(false)),
             ),
             onClickConfirm = { checkboxList ->
                 customCheckboxDialogState.value = customCheckboxDialogState.value?.copy(
@@ -103,6 +108,28 @@ class MainViewModel @Inject constructor(
                 )
             }
         )
+
+        customRadioButtonDialogState.value = CustomRadioButtonDialogState(
+            radioButtonList = arrayListOf(
+                RadioButtonState("아주좋음", mutableStateOf(false)),
+                RadioButtonState("좋음", mutableStateOf(false)),
+                RadioButtonState("보통", mutableStateOf(false)),
+                RadioButtonState("약간", mutableStateOf(false)),
+                RadioButtonState("아주약간", mutableStateOf(false)),
+            ),
+            onClickConfirm = { radioButtonList ->
+                customRadioButtonDialogState.value = customRadioButtonDialogState.value?.copy(
+                    isShowDialog = false,
+                    radioButtonList = radioButtonList
+                )
+            },
+            onClickCancel = {
+                customRadioButtonDialogState.value = customRadioButtonDialogState.value?.copy(
+                    isShowDialog = false
+                )
+            }
+        )
+
     }
 
     fun showCustomAlertDialog() {
@@ -132,7 +159,6 @@ class MainViewModel @Inject constructor(
     }
 
 
-
     fun showDatePickerDialog() {
         customDatePickerDialogState.value =
             customDatePickerDialogState.value?.copy(isShowDialog = true)
@@ -151,6 +177,11 @@ class MainViewModel @Inject constructor(
     fun showCheckboxDialog() {
         customCheckboxDialogState.value =
             customCheckboxDialogState.value?.copy(isShowDialog = true)
+    }
+
+    fun showRadioButtonDialog() {
+        customRadioButtonDialogState.value =
+            customRadioButtonDialogState.value?.copy(isShowDialog = true)
     }
 
     // 다이얼로그 상태 초기화

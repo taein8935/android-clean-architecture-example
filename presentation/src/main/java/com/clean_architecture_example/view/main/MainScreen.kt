@@ -33,6 +33,7 @@ import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.Cus
 import com.clean_architecture_example.view.dialog.custom_checkbox_dialog.CustomCheckboxDialog
 import com.clean_architecture_example.view.dialog.custom_date_picker_dialog.CustomDatePickerDialog
 import com.clean_architecture_example.view.dialog.custom_loading_dialog.LoadingState
+import com.clean_architecture_example.view.dialog.custom_radio_button_dialog.CustomRadioButtonDialog
 import com.clean_architecture_example.view.dialog.custom_text_field_dialog.CustomTextFieldDialog
 import com.clean_architecture_example.view.dialog.custom_time_picker_dialog.CustomTimePickerDialog
 
@@ -50,6 +51,7 @@ fun MainScreen(
     val customTimePickerDialogState = viewModel.customTimePickerDialogState.value
     val customTextFieldDialogState = viewModel.customTextFieldDialogState.value
     val customCheckboxDialogState = viewModel.customCheckboxDialogState.value
+    val customRadioButtonDialogState = viewModel.customRadioButtonDialogState.value
 
     Scaffold(
         topBar = {
@@ -204,6 +206,26 @@ fun MainScreen(
                 )
             )
 
+            Button(
+                onClick = { viewModel.showRadioButtonDialog() },
+                shape = RectangleShape,
+            ) {
+                Text(
+                    text = "8. Show RadioButtonDialog",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Text(
+                text = "text: ${viewModel.customRadioButtonDialogState.value?.radioButtonList?.map { it.isChecked.value }?.toString() ?: "체크를 해보세요."}",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
 
 
             if (customAlertDialogState.title.isNotBlank()) {
@@ -254,6 +276,14 @@ fun MainScreen(
                     initialCheckboxList = customCheckboxDialogState.checkboxList,
                     onClickCancel = customCheckboxDialogState.onClickCancel,
                     onClickConfirm = customCheckboxDialogState.onClickConfirm
+                )
+            }
+
+            if (customRadioButtonDialogState?.isShowDialog == true) {
+                CustomRadioButtonDialog(
+                    initialRadioButtonList = customRadioButtonDialogState.radioButtonList,
+                    onClickCancel = customRadioButtonDialogState.onClickCancel,
+                    onClickConfirm = customRadioButtonDialogState.onClickConfirm
                 )
             }
         }

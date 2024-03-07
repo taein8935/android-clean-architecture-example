@@ -1,7 +1,9 @@
 package com.clean_architecture_example.view.main
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -27,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.clean_architecture_example.navigation.Page
 import com.clean_architecture_example.util.preview.PreviewContainer
 import com.clean_architecture_example.view.dialog.custom_alert_dialog.CustomAlertDialog
 import com.clean_architecture_example.view.dialog.custom_bottom_sheet_dialog.CustomBottomSheetDialog
@@ -68,6 +71,26 @@ fun MainScreen(
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Button(
+                    onClick = { mainNavController.navigate(Page.UIExample.route) },
+                    shape = RectangleShape,
+                ) {
+                    Text(
+                        text = "Go UI Example",
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             Button(
                 onClick = { viewModel.showCustomAlertDialog() },
                 shape = RectangleShape,
@@ -199,7 +222,10 @@ fun MainScreen(
                 )
             }
             Text(
-                text = "text: ${viewModel.customCheckboxDialogState.value?.checkboxList?.map { it.isChecked.value }?.toString() ?: "체크를 해보세요."}",
+                text = "text: ${
+                    viewModel.customCheckboxDialogState.value?.checkboxList?.map { it.isChecked.value }
+                        ?.toString() ?: "체크를 해보세요."
+                }",
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
@@ -220,7 +246,10 @@ fun MainScreen(
                 )
             }
             Text(
-                text = "text: ${viewModel.customRadioButtonDialogState.value?.radioButtonList?.map { it.isChecked.value }?.toString() ?: "체크를 해보세요."}",
+                text = "text: ${
+                    viewModel.customRadioButtonDialogState.value?.radioButtonList?.map { it.isChecked.value }
+                        ?.toString() ?: "체크를 해보세요."
+                }",
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold

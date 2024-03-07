@@ -14,6 +14,10 @@ import com.clean_architecture_example.view.movie.detail.MovieDetailViewModel
 import com.clean_architecture_example.view.movie.list.MovieListPage
 import com.clean_architecture_example.view.movie.list.MovieListScreen
 import com.clean_architecture_example.view.movie.list.MovieListViewModel
+import com.clean_architecture_example.view.ui_example.UiExampleScreen
+import com.clean_architecture_example.view.ui_example.UiExampleViewModel
+import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerScreen
+import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerViewModel
 
 @Composable
 fun MainGraph(
@@ -21,6 +25,8 @@ fun MainGraph(
 ) {
     NavHost(navController = mainNavController, startDestination = Page.Main.route) {
 
+
+        // MAIN
         navigation(
             route = Page.Main.route,
             startDestination = Page.MainPage.route
@@ -36,6 +42,33 @@ fun MainGraph(
             }
         }
 
+        // UI EXAMPLE
+        navigation(
+            route = Page.UIExampleMain.route,
+            startDestination = Page.UIExample.route
+        ) {
+            composable(
+                route = Page.UIExample.route
+            ) {
+                val viewModel = hiltViewModel<UiExampleViewModel>()
+                UiExampleScreen(
+                    mainNavController = mainNavController,
+                    viewModel = viewModel
+                )
+            }
+
+            composable(
+                route = Page.ViewPagerExample.route
+            ) {
+                val viewModel = hiltViewModel<ViewPagerViewModel>()
+                ViewPagerScreen(
+                    mainNavController = mainNavController,
+                    viewModel = viewModel
+                )
+            }
+        }
+
+        // MOVIE
         navigation(
             route = Page.Movie.route,
             startDestination = Page.Movies.route

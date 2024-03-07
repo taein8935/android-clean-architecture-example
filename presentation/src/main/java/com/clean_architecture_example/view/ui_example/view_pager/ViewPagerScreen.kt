@@ -19,29 +19,29 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+
 
 @Composable
 fun ViewPagerScreen(
     mainNavController: NavHostController,
     viewModel: ViewPagerViewModel
 ) {
+
     val pagerState = rememberPagerState {
         10
-    }
-
-    LaunchedEffect(pagerState) {
-        // Collect from the a snapshotFlow reading the currentPage
-        snapshotFlow { pagerState.currentPage }.collect { page ->
-            Log.e("Page change", "Page changed to $page")
-        }
     }
 
     Column(
@@ -64,37 +64,45 @@ fun ViewPagerScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        HorizontalPager(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-
-            state = pagerState
-        ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .padding(horizontal = 20.dp),
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color.Black),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White,
-                ),
-                elevation = CardDefaults.cardElevation(10.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center, // 세로 방향으로 가운데 정렬
-                    horizontalAlignment = Alignment.CenterHorizontally // 가로 방향으로 가운데 정렬
-                ) {
-                    Text(
-                        text = "Page $it",
-                    )
-                }
-            }
-
-        }
+        CustomViewPager(pagerState = pagerState)
     }
-
 }
 
+@Composable
+fun CustomViewPager(pagerState: PagerState) {
+    HorizontalPager(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+
+        state = pagerState
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .padding(horizontal = 20.dp),
+            shape = RoundedCornerShape(8.dp),
+            border = BorderStroke(1.dp, Color.Black),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            ),
+            elevation = CardDefaults.cardElevation(10.dp),
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center, // 세로 방향으로 가운데 정렬
+                horizontalAlignment = Alignment.CenterHorizontally // 가로 방향으로 가운데 정렬
+            ) {
+                Text(
+                    text = "Page $it",
+                )
+            }
+        }
+    }
+}
+
+@Composable
+@Preview
+fun CustomViewPagerPreview() {
+    CustomViewPager(rememberPagerState { 10 })
+}

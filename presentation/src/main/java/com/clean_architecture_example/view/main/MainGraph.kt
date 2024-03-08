@@ -16,6 +16,8 @@ import com.clean_architecture_example.view.movie.list.MovieListScreen
 import com.clean_architecture_example.view.movie.list.MovieListViewModel
 import com.clean_architecture_example.view.ui_example.UiExampleScreen
 import com.clean_architecture_example.view.ui_example.UiExampleViewModel
+import com.clean_architecture_example.view.ui_example.tab_pager.TabPagerScreen
+import com.clean_architecture_example.view.ui_example.tab_pager.TabPagerViewModel
 import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerScreen
 import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerViewModel
 
@@ -62,6 +64,16 @@ fun MainGraph(
             ) {
                 val viewModel = hiltViewModel<ViewPagerViewModel>()
                 ViewPagerScreen(
+                    mainNavController = mainNavController,
+                    viewModel = viewModel
+                )
+            }
+
+            composable(
+                route = Page.TabPagerExample.route
+            ) {
+                val viewModel = hiltViewModel<TabPagerViewModel>()
+                TabPagerScreen(
                     mainNavController = mainNavController,
                     viewModel = viewModel
                 )

@@ -13,6 +13,7 @@ sealed class Page(val route: String) {
     data object UIExampleMain: Page("ui_example_main")
     data object UIExample: Page("ui_example")
     data object ViewPagerExample: Page("view_pager_example")
+    data object TabPagerExample: Page("tab_pager_example")
 }
 
 

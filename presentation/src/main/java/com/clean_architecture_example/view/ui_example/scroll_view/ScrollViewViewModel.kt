@@ -1,7 +1,6 @@
-package com.clean_architecture_example.view.ui_example
+package com.clean_architecture_example.view.ui_example.scroll_view
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -24,23 +23,9 @@ import kotlinx.coroutines.launch
 import java.util.logging.Logger
 import javax.inject.Inject
 
-
-data class UiState(
-    val isLoading: Boolean = false,
-    val movies: List<MovieEntity> = emptyList(),
-    val error: String = "error"
-)
-
 @HiltViewModel
-class UiExampleViewModel @Inject constructor(
+class ScrollViewViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val uiState: MutableState<UiState> = mutableStateOf(UiState())
 
-    fun setUiState() {
-        this.uiState.value = uiState.value.copy(
-            isLoading = !uiState.value.isLoading,
-            error = "error"
-        )
-    }
 }

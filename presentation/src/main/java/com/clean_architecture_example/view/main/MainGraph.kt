@@ -16,6 +16,10 @@ import com.clean_architecture_example.view.movie.list.MovieListScreen
 import com.clean_architecture_example.view.movie.list.MovieListViewModel
 import com.clean_architecture_example.view.ui_example.UiExampleScreen
 import com.clean_architecture_example.view.ui_example.UiExampleViewModel
+import com.clean_architecture_example.view.ui_example.recycler_view.RecyclerViewScreen
+import com.clean_architecture_example.view.ui_example.recycler_view.RecyclerViewViewModel
+import com.clean_architecture_example.view.ui_example.scroll_view.ScrollViewScreen
+import com.clean_architecture_example.view.ui_example.scroll_view.ScrollViewViewModel
 import com.clean_architecture_example.view.ui_example.tab_pager.TabPagerScreen
 import com.clean_architecture_example.view.ui_example.tab_pager.TabPagerViewModel
 import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerScreen
@@ -74,6 +78,26 @@ fun MainGraph(
             ) {
                 val viewModel = hiltViewModel<TabPagerViewModel>()
                 TabPagerScreen(
+                    mainNavController = mainNavController,
+                    viewModel = viewModel
+                )
+            }
+
+            composable(
+                route = Page.ScrollViewExample.route
+            ) {
+                val viewModel = hiltViewModel<ScrollViewViewModel>()
+                ScrollViewScreen(
+                    mainNavController = mainNavController,
+                    viewModel = viewModel
+                )
+            }
+
+            composable(
+                route = Page.RecyclerViewExample.route
+            ) {
+                val viewModel = hiltViewModel<RecyclerViewViewModel>()
+                RecyclerViewScreen(
                     mainNavController = mainNavController,
                     viewModel = viewModel
                 )

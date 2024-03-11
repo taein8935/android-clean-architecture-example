@@ -115,5 +115,5 @@ fun CustomCardView(text: String) {
 @Composable
 @Preview
 fun ScrollViewScreenPreview() {
-    CustomScrollView(items = listOf("1", "2", "3"), scrollState = ScrollState(3))
+    CustomScrollView(items = List(50) { it.toString() }, scrollState = ScrollState(3))
 }

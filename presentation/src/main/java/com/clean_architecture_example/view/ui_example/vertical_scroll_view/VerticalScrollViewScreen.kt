@@ -1,6 +1,5 @@
-package com.clean_architecture_example.view.ui_example.scroll_view
+package com.clean_architecture_example.view.ui_example.vertical_scroll_view
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -12,24 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,9 +28,9 @@ import androidx.navigation.NavHostController
 
 
 @Composable
-fun ScrollViewScreen(
+fun VerticalScrollViewScreen(
     mainNavController: NavHostController,
-    viewModel: ScrollViewViewModel
+    viewModel: VerticalScrollViewViewModel
 ) {
     val scrollState = rememberScrollState()
     val items = List(5000) { it.toString() }
@@ -60,7 +48,7 @@ fun ScrollViewScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        CustomScrollView(
+        CustomVerticalScrollView(
             items = items,
             scrollState = scrollState
         )
@@ -68,7 +56,7 @@ fun ScrollViewScreen(
 }
 
 @Composable
-fun CustomScrollView(items: List<String>, scrollState: ScrollState) {
+fun CustomVerticalScrollView(items: List<String>, scrollState: ScrollState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -115,5 +103,5 @@ fun CustomCardView(text: String) {
 @Composable
 @Preview
 fun ScrollViewScreenPreview() {
-    CustomScrollView(items = List(50) { it.toString() }, scrollState = ScrollState(3))
+    CustomVerticalScrollView(items = List(50) { it.toString() }, scrollState = ScrollState(3))
 }

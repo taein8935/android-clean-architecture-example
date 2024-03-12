@@ -1,6 +1,5 @@
-package com.clean_architecture_example.view.ui_example.recycler_view
+package com.clean_architecture_example.view.ui_example.vertical_recycler_view
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,41 +12,28 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.clean_architecture_example.view.ui_example.scroll_view.CustomCardView
-import com.clean_architecture_example.view.ui_example.scroll_view.CustomScrollView
 
 
 @Composable
-fun RecyclerViewScreen(
+fun VerticalRecyclerViewScreen(
     mainNavController: NavHostController,
-    viewModel: RecyclerViewViewModel
+    viewModel: VerticalRecyclerViewViewModel
 ) {
     val users by remember { viewModel.users }
 
@@ -64,14 +50,14 @@ fun RecyclerViewScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        CustomRecyclerView(
+        CustomVerticalRecyclerView(
             users = users
         )
     }
 }
 
 @Composable
-fun CustomRecyclerView(users: List<UserEntity>) {
+fun CustomVerticalRecyclerView(users: List<UserEntity>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),

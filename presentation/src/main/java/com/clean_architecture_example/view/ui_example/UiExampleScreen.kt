@@ -64,11 +64,11 @@ fun UiExampleScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = { mainNavController.navigate(Page.ScrollViewExample.route) },
+            onClick = { mainNavController.navigate(Page.VerticalScrollViewExample.route) },
             shape = RectangleShape,
         ) {
             Text(
-                text = "3. Go Scroll View",
+                text = "3. Go Vertical Scroll View",
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     fontSize = 14.sp,
@@ -81,11 +81,28 @@ fun UiExampleScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = { mainNavController.navigate(Page.RecyclerViewExample.route) },
+            onClick = { mainNavController.navigate(Page.VerticalRecyclerViewExample.route) },
             shape = RectangleShape,
         ) {
             Text(
-                text = "4. Go Recycler View",
+                text = "4. Go Vertical Recycler View",
+                textAlign = TextAlign.Center,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = { mainNavController.navigate(Page.HorizontalScrollViewExample.route) },
+            shape = RectangleShape,
+        ) {
+            Text(
+                text = "5. Go Horizontal Scroll View",
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     fontSize = 14.sp,

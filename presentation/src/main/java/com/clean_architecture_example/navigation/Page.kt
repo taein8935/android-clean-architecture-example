@@ -14,8 +14,10 @@ sealed class Page(val route: String) {
     data object UIExample: Page("ui_example")
     data object ViewPagerExample: Page("view_pager_example")
     data object TabPagerExample: Page("tab_pager_example")
-    data object ScrollViewExample: Page("scroll_view_example")
-    data object RecyclerViewExample: Page("recycler_view_example")
+    data object VerticalScrollViewExample: Page("vertical_scroll_view_example")
+    data object VerticalRecyclerViewExample: Page("vertical_recycler_view_example")
+    data object HorizontalScrollViewExample: Page("horizontal_scroll_view_example")
+    data object HorizontalRecyclerViewExample: Page("horizontal_recycler_view_example")
 }
 
 

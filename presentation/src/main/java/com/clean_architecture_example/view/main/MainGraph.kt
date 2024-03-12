@@ -12,16 +12,17 @@ import com.clean_architecture_example.navigation.Page
 import com.clean_architecture_example.view.movie.detail.MovieDetailPage
 import com.clean_architecture_example.view.movie.detail.MovieDetailViewModel
 import com.clean_architecture_example.view.movie.list.MovieListPage
-import com.clean_architecture_example.view.movie.list.MovieListScreen
 import com.clean_architecture_example.view.movie.list.MovieListViewModel
 import com.clean_architecture_example.view.ui_example.UiExampleScreen
 import com.clean_architecture_example.view.ui_example.UiExampleViewModel
-import com.clean_architecture_example.view.ui_example.recycler_view.RecyclerViewScreen
-import com.clean_architecture_example.view.ui_example.recycler_view.RecyclerViewViewModel
-import com.clean_architecture_example.view.ui_example.scroll_view.ScrollViewScreen
-import com.clean_architecture_example.view.ui_example.scroll_view.ScrollViewViewModel
+import com.clean_architecture_example.view.ui_example.vertical_scroll_view.VerticalScrollViewViewModel
+import com.clean_architecture_example.view.ui_example.horizontal_scroll_view.HorizontalScrollViewScreen
+import com.clean_architecture_example.view.ui_example.horizontal_scroll_view.HorizontalScrollViewViewModel
 import com.clean_architecture_example.view.ui_example.tab_pager.TabPagerScreen
 import com.clean_architecture_example.view.ui_example.tab_pager.TabPagerViewModel
+import com.clean_architecture_example.view.ui_example.vertical_recycler_view.VerticalRecyclerViewScreen
+import com.clean_architecture_example.view.ui_example.vertical_recycler_view.VerticalRecyclerViewViewModel
+import com.clean_architecture_example.view.ui_example.vertical_scroll_view.VerticalScrollViewScreen
 import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerScreen
 import com.clean_architecture_example.view.ui_example.view_pager.ViewPagerViewModel
 
@@ -84,20 +85,30 @@ fun MainGraph(
             }
 
             composable(
-                route = Page.ScrollViewExample.route
+                route = Page.VerticalScrollViewExample.route
             ) {
-                val viewModel = hiltViewModel<ScrollViewViewModel>()
-                ScrollViewScreen(
+                val viewModel = hiltViewModel<VerticalScrollViewViewModel>()
+                VerticalScrollViewScreen(
                     mainNavController = mainNavController,
                     viewModel = viewModel
                 )
             }
 
             composable(
-                route = Page.RecyclerViewExample.route
+                route = Page.VerticalRecyclerViewExample.route
             ) {
-                val viewModel = hiltViewModel<RecyclerViewViewModel>()
-                RecyclerViewScreen(
+                val viewModel = hiltViewModel<VerticalRecyclerViewViewModel>()
+                VerticalRecyclerViewScreen(
+                    mainNavController = mainNavController,
+                    viewModel = viewModel
+                )
+            }
+
+            composable(
+                route = Page.HorizontalScrollViewExample.route
+            ) {
+                val viewModel = hiltViewModel<HorizontalScrollViewViewModel>()
+                HorizontalScrollViewScreen(
                     mainNavController = mainNavController,
                     viewModel = viewModel
                 )
